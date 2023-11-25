@@ -1,14 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {sendBasicEmail} = require('./service/email-service')
+// const {sendBasicEmail} = require('./service/email-service')
 const {PORT} = require('./config/serverConfig')
 const jobs = require('./utils/job')
 const TicketController = require('./controllers/ticket-controller')
-
-const setupAndStartServer =()=>{
+const {createChannel} = require('./utils/messageQueue')
+const setupAndStartServer = async ()=>{
     const app = express();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended:true}))
+
     app.post('/api/v1/tickets',TicketController.create);
     
 
@@ -17,7 +18,7 @@ const setupAndStartServer =()=>{
         
         
         
-        jobs();
+        // jobs();
         // sendBasicEmail(
         //     'support@reminderservice.com',
         //     'smithdashdash@gmail.com',
